@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Publicar un Anuncio </title>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+    form {
+      margin: 50px auto;
+      max-width: 600px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    label {
+      display: block;
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    input[type="text"],
+    input[type="password"],
+    select {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    }
+    input[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #333;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    input[type="submit"]:hover {
+      background-color: #555;
+    }
+  </style>
+  <a href="{{ url_for('home') }}">Volver al inicio</a>
+
+
+<form name="formulario_anuncio" method="post" >
+    <label for="titulo">Titulo:</label>
+    <input type="text" id="titulo" name="titulo"><br>
+  
+    <label for="descripcion">Descripcion del vehiculo:</label>
+    <input type="text" id="descripcion" name="descripcion"><br>
+  
+    <label for="tipo">Tipo de vehiculo:</label>
+    <select id="tipo" name="tipo" onchange="actualizarMarcas()">
+      {% for resultado in resultados_tipo_vehiculo %}
+        <option value="{{ resultado[0] }}">{{ resultado[0] }}</option>
+      {% endfor %}
+    </select><br>
+    
+    
+    <label for="marca">Marca:</label>
+    <select id="marca" name="marca">
+      <!-- Opciones de marcas se actualizarán con JavaScript -->
+    </select>
+    
+    
+  
+    <label for="antiguedad">Antigüedad:</label>
+    <input type="text" id="antiguedad" name="antiguedad"><br>
+  
+    <label for="estado">Estado:</label>
+    <select id="estado" name="estado">
+      <option value="excelente">Excelente</option>
+      <option value="bueno">Bueno</option>
+      <option value="normal">Normal</option>
+      <option value="malo">Malo</option>
+    </select><br>
+  
+    <label for="especializado">Especializado en:</label>
+    <select id="especializado" name="especializado">
+      <option value="perecedero">Perecedero</option>
+      <option value="farmacia">Farmacia</option>
+      <option value="a granel">A granel</option>
+      <option value="liquidos">Líquidos</option>
+      <option value="mercancias peligrosas">Mercancías peligrosas</option>
+      <option value="carga normal">Carga normal</option>
+      <option value="otros">Otros</option>
+    </select><br>
+  
+    <label for="volumen_total">Volumen Total:</label>
+    <input type="number" id="volumen_total" name="volumen_total">
+    <button type="button" onclick="mostrarAyuda()">Ayudame ccon el volumen!</button>
+    
+    <div id="ayuda" style="display:none">
+      <h4>Metros cubicos de los vehiculos.</h4>
+      <li>Trailer == 88 </li>
+      <li>Camion Rigido == 20</li>
+      <li>Camion Jumbo == 120 </li>
+      <li>Furgoneta Grande == 14</li>
+      <li>Furgoneta Pequeña = 7</li>
+      <button type="button"> No es ninguno de estos, Ayudame!! </button>
+    </div> <br>
+
+
+    <script>
+      function mostrarAyuda() {
+        var ayuda = document.getElementById("ayuda");
+        ayuda.style.display = "block";
+      }
+      </script>
+
+
+    <label for="numero_maximo_pallets_europeo">Numero máximo de pallets europeo:</label>
+    <input type="text" id="numero_maximo_pallets_europeo" name="numero_maximo_pallets_europeo"><br>
+  
+    <label for="numero_maximo_pallets_americano">Numero máximo de pallets americanos:</label>
+    <input type="text" id="numero_maximo_pallets_americano" name="numero_maximo_pallets_americano"><br>
+  
+
+    <label for="anchura">Anchura</label>
+    <input type="text" id="anchura" name="anchura"><br>
+
+    <label for="altura">Altura</label>
+    <input type="text" id="altura" name="altura"><br>
+
+    <label for="combustible">Tipo de combutible:</label>
+    <select id="combustible" name="combustible" >
+      {% for resultado in resultados_tipo_combustible %}
+        <option value="{{ resultado[0] }}">{{ resultado[0] }}</option>
+      {% endfor %}
+    </select><br>
+
+    <label for="nacionalidad">Nacionalidad del vehículo (matrícula):</label>
+    <select id="nacionalidad" name="nacionalidad" >
+      {% for resultado in resultados_pais %}
+        <option value="{{ resultado[0] }}">{{ resultado[0] }}</option>
+      {% endfor %}
+    </select><br>
+
+    <label for="matricula">Matricula</label>
+    <input type="text" id="matricula" name="matricula"><br>
+
+    <label for="portacontenedores_40_pies">Portacontenedores 40 pies:</label>
+    <input type="checkbox" id="portacontenedores_40_pies" name="portacontenedores_40_pies" value="true" {% if conglomerado %}checked{% endif %}><br>
+
+    <label for="portacontenedores_20_pies">Portacontenedores 20 pies:</label>
+    <input type="checkbox" id="portacontenedores_20_pies" name="portacontenedores_20_pies" value="true" {% if conglomerado %}checked{% endif %}><br>
+
+
+    <input type="submit" value="Publicar">
+  </form>
+
+  <script >
+    function actualizarMarcas() {
+      var tipoVehiculo = document.getElementById("tipo").value;
+      var selectMarcas = document.getElementById("marca");
+      selectMarcas.innerHTML = ""; // Limpiar opciones actuales
+      switch (tipoVehiculo) {
+          case "TRAILER":
+              // Agregar opciones para marcas de trailers
+              var option1 = document.createElement("option");
+              option1.text = "Schmitz";
+              option1.value = "schmitz";
+              selectMarcas.add(option1);
+              var option2 = document.createElement("option");
+              option2.text = "Krone";
+              option2.value = "krone";
+              selectMarcas.add(option2);
+              var option3 = document.createElement("option");
+              option3.text = "Guillen";
+              option3.value = "guillen";
+              selectMarcas.add(option3);
+              var option4 = document.createElement("option");
+              option4.text = "Lecitrailer";
+              option4.value = "lecitrailer";
+              selectMarcas.add(option4);
+              break;
+          case "CAMION":
+          case "JUMBO":
+              // Agregar opciones para marcas de camiones y jumbos
+              var option1 = document.createElement("option");
+              option1.text = "Iveco";
+              option1.value = "iveco";
+              selectMarcas.add(option1);
+              var option2 = document.createElement("option");
+              option2.text = "Scania";
+              option2.value = "scania";
+              selectMarcas.add(option2);
+              var option3 = document.createElement("option");
+              option3.text = "Mercedes";
+              option3.value = "mercedes";
+              selectMarcas.add(option3);
+              var option4 = document.createElement("option");
+              option4.text = "Man";
+              option4.value = "man";
+              selectMarcas.add(option4);
+              var option5 = document.createElement("option");
+              option5.text = "Daf";
+              option5.value = "daf";
+              selectMarcas.add(option5);
+              break;
+          case "FURGONETA GRANDE":
+          case "FURGONETA PEQUENIA":
+              var option1 = document.createElement("option");
+              option1.text = "CITROEN";
+              option1.value = "CITROEN";
+              selectMarcas.add(option1);
+              var option2 = document.createElement("option");
+              option2.text = "PEUGEOT";
+              option2.value = "PEUGEOT";
+              selectMarcas.add(option2);
+              var option3 = document.createElement("option");
+              option3.text = "Mercedes";
+              option3.value = "mercedes";
+              selectMarcas.add(option3);
+              var option4 = document.createElement("option");
+              option4.text = "FORD";
+              option4.value = "FORD";
+              selectMarcas.add(option4);
+              var option5 = document.createElement("option");
+              option5.text = "VOLKSWAGEN";
+              option5.value = "VOLKSWAGEN";
+              selectMarcas.add(option5);
+              var option5 = document.createElement("option");
+              option5.text = "MERCEDES";
+              option5.value = "MERCEDES";
+              selectMarcas.add(option5);
+              break;
+              // Otras opciones de tipos de vehículos...
+      }
+  }
+
+
+  </script>
+
+
+
+
+</body>
+</html>

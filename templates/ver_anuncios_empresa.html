@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Anuncios de la Empresa</title>
+
+<style>
+  .header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .container {
+    max-width: 2000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    overflow-x: auto;
+  }
+  
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  th {
+    text-align: left;
+    padding: 10px;
+    background-color: #2d4059;
+    border: 1px solid #ddd;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  
+  td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  h2 {
+    margin-top: 0;
+  }
+  a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+  }
+  
+  a:hover {
+    color: #666;
+  }
+  
+  .button {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .button:hover {
+    background-color: #00b8e6;
+  }
+</style>
+
+
+<script>
+  function showAlert() {
+    alert("Antes de publicar un anuncio, debes seleccionar un vehículo.");
+  }
+  </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+  
+    // Ocultar columnas
+    $("#hide_columns").click(function() {
+      $(".matricula, .titulo, .descripcion, .tipo, .marca, .antiguedad, .estado, .especializado, .pallets_europeo, .pallets_americano, .anchura, .altura, .combustible, .nacionalidad, .distancia_maxima, .destino_preferido, .fecha_inicio, .fecha_fin, .conglomerado, .recogidas, .traspalet, .disponibilidad, .fines_semana").hide();
+    });
+  
+  // Mostrar todas las columnas
+  $("#show_all_columns").click(function() {
+    $(".matricula, .titulo, .descripcion, .tipo, .marca, .antiguedad, .estado, .especializado, .pallets_europeo, .pallets_americano, .anchura, .altura, .combustible, .nacionalidad, .distancia_maxima, .destino_preferido, .fecha_inicio, .fecha_fin, .conglomerado, .recogidas, .traspalet, .disponibilidad, .fines_semana").show();
+    });
+    
+    // Filtro de búsqueda
+    $("#search").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("table tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+    });
+    });
+    
+    });
+  </script>
+
+
+
+</head>
+<body>
+  <a href="{{ url_for('perfil_usuario') }}" onclick="showAlert()">Publicar un anuncio</a>
+  <a href="{{ url_for('home') }}">Volver al inicio</a>
+  <div class="header">
+
+        
+    <h1>Anuncios de la Empresa</h1>
+  </div>
+
+  <div class="container">
+    <div class="container">
+      <h2>Lista de Anuncios</h2>
+
+    <div class="filters">
+      <input type="text" id="search" placeholder="Buscar...">
+      <button class="button" id="hide_columns">Ocultar columnas</button>
+      <button class="button" id="show_all_columns">Mostrar todas las columnas</button>
+    </div>
+
+      <table>
+        <tr>
+          <th class="matricula">Matricula</th>
+          <th class="titulo">Título</th>
+          <th class="descripcion">Descripción</th>
+          <th class="tipo">Tipo de vehículo</th>
+          <th class="tipo_de_servicio">Tipo de Servicio </th>
+          <th class="marca">Marca</th>
+          <th class="antiguedad">Antigüedad</th>
+          <th class="estado">Estado</th>
+          <th class="especializado">Especializado en</th>
+          <th class="pallets_europeo">Número máximo de pallets europeo</th>
+          <th class="pallets_americano">Número máximo de pallets americano</th>
+          <th class="anchura">Anchura</th>
+          <th class="altura">Altura</th>
+          <th class="combustible">Combustible</th>
+          <th class="nacionalidad">Nacionalidad</th>
+          <th class="distancia_maxima">Distancia máxima</th>
+          <th class="destino_preferido">Destino preferido</th>
+          <th class="fecha_inicio">Fecha Inicio Disponibilidad</th>
+          <th class="fecha_fin">Fecha Fin Disponibilidad</th>
+          <th class="conglomerado">Conglomerado</th>
+          <th class="recogidas">Recogidas</th>
+          <th class="traspalet">Traspalet</th>
+          <th class="disponibilidad">Disponibilidad inmediata</th>
+          <th class="fines_semana">Fines de semana</th>
+          <th class="modificar"></th>
+        </tr>
+        
+          {% for resultado in resultados %}
+          <tr>
+            <td>{{ resultado[15] }}</td>
+            <td>{{ resultado[2] }}</td>
+            <td>{{ resultado[3] }}</td>
+            <td>{{ resultado[4] }}</td>
+            <td>{{ resultado[18] }}</td>
+            <td>{{ resultado[5] }}</td>
+            <td>{{ resultado[6] }}</td>
+            <td>{{ resultado[7] }}</td>
+            <td>{{ resultado[8] }}</td>
+            <td>{{ resultado[9] }}</td>
+            <td>{{ resultado[10] }}</td>
+            <td>{{ resultado[11] }}</td>
+            <td>{{ resultado[12] }}</td>
+            <td>{{ resultado[13] }}</td>
+            <td>{{ resultado[14] }}</td>
+            <td>{{ resultado[19] }}</td>
+            <td>{{ resultado[20] }}</td>
+            <td>{{ resultado[21] }}</td>
+            <td>{{ resultado[22] }}</td>
+            <td>{{ 'Sí' if resultado[23] else '-' }}</td>
+            <td>{{ 'Sí' if resultado[24] else '-' }}</td>
+            <td>{{ 'Sí' if resultado[25] else '-' }}</td>
+            <td>{{ 'Sí' if resultado[26] else '-' }}</td>
+            <td>{{ 'Sí' if resultado[27] else '-' }}</td>
+            <td><a class="button" href="{{ url_for('modificar_anuncio', anuncio_id=resultado[0]) }}">Modificar</a></td>
+          </tr>
+              {% endfor %}
+      </table>
+  </div>
+</body>
+</html>

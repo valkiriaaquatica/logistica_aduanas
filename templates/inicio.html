@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mi empresa</title>
+    <link rel="stylesheet" type="text/css" href="inicio.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/styles/inicio.css')}}">
+
+  </head>
+<style>
+  
+</style>
+<body>
+
+    <header>
+        <div id="logo-container">
+            <img src="logo.png" alt="Logo de mi empresa" id="logo">
+            <h1 id="titulo">BUSCADOR DE TRANSPORTES</h1>
+
+            <div id="login">
+              {% if session['cif'] %}
+                <span>Hola, {{ session['nombre_empresa'] }} </span>
+                <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+              {% else %}
+                <a href="{{ url_for('login') }}">Iniciar sesión</a>
+                <a href="{{ url_for('registrar') }}" target="_blank">Registrarse</a>
+              {% endif %}
+            </div>
+            
+    
+  
+        <div id="color-switcher">
+            <button id="light-theme-btn">☀</button>
+            <button id="dark-theme-btn">☾</button>
+        </div>
+    </header>
+    <aside>
+      <h2>Precios de la Gasolina</h2>
+      <ul>
+          <li>España: <span id="precio-es"></span></li>
+          <li>Francia: <span id="precio-fr"></span></li>
+          <li>Portugal: <span id="precio-pt"></span></li>
+      </ul>
+  </aside> <br>
+  <h2>Precios del Diesel</h2>
+  <ul>
+      <li>España: <span id="precio-es-diesel"></span></li>
+      <li>Francia: <span id="precio-fr-diesel"></span></li>
+      <li>Portugal: <span id="precio-pt-diesel"></span></li>
+  </ul>
+</aside>
+
+<h3>Geolocalizacion </h3>
+  <p> Permite Buscador de transportes conocer tu ubicacion, de esta manera 
+    podremos mejorar la calidad de nuestros servicios y opfercerte busquedas
+  mas potentes </p>
+  <label>
+    <input type="checkbox" name="buscar_cerca_de_mi" id="buscar_cerca_de_mi">
+    Buscar cerca de mi ubicación
+  </label>
+  
+  <button type="button" id="buscar">Buscar</button>
+
+
+
+
+
+    <br>
+    <div id="opciones_usuario">
+      <a href="{{ url_for('perfil_usuario') }}">Mi empresa</a>
+      <a href="{{ url_for('buscar_transporte') }}">Buscar  transporte</a>
+      <a href="{{ url_for('perfil_usuario') }}" onclick="showAlert()">Publicar un anuncio</a>
+    </div>
+
+    <main>
+      <h1>Anuncios</h1>
+      <h3> Recomendamos hacer una busqueda  directa </h3>
+      <h3> Los precios van desde el sitio de localizacion de la
+         empresa y su recogida y entregga
+  
+      <form action="/" method="get">
+        <label for="tipo_servicio">Tipo de servicio:</label>
+        <input type="text" name="tipo_servicio" list="lista_tipos_servicio">
+        <datalist id="lista_tipos_servicio">
+          <option value="Todos">
+          <option value="Portes">
+          <option value="Mudanzas">
+          <option value="Transporte Nacional">
+          <option value="Transporte Internacional (UE)">
+          <option value="Transporte Internacional (No UE)">
+        </datalist> <br>
+        
+        <label for="tipo_vehiculo">Tipo de vehículo:</label>
+        <input type="text" name="tipo_vehiculo" list="lista_tipos_vehiculo">
+        <datalist id="lista_tipos_vehiculo">
+          <option value="TODOS">
+          <option value="TRAILER">
+          <option value="CAMION">
+          <option value="JUMBO">
+          <option value="FURGONETA GRANDE">
+          <option value="FURGONETA PEQUENIA">
+        </datalist> <br>
+
+        <label for="origen_carga">Origen de la carga:</label>
+        <input type="text" name="origen_carga" id="origen_carga">
+        
+        <label for="destino_carga">Destino de la carga:</label>
+        <input type="text" name="destino_carga" id="destino_carga">
+        
+
+        <label for="volumen">Volumen de la carga:</label>
+        <small><a href="#" onclick="window.open('/indicaciones-calcular-volumen','_blank'); return false;">Pincha aquí si no sabes cómo calcularlo</a></small>        
+        <input type="text" name="volumen" id="volumen">
+
+        <label for="fecha_inicio">Fecha de disponibilidad de la carga:</label>
+        <input type="date" name="fecha_inicio" id="fecha_inicio">
+        
+        <label for="fecha_entrega">Fecha de entrega en destino:</label>
+        <input type="date" name="fecha_entrega" id="fecha_entrega">
+        
+
+        
+
+        <input type="submit" value="Filtrar">
+      </form>
+      
+
+  
+  
+      <table>
+        <thead>
+          <tr>
+            <th>Tipo de vehículo</th> 
+            <th>Comentarios:</th>
+            <th>Localización</th>
+            <th>Distancia máxima</th>
+            <th>Destino preferido</th>
+            <th>Fecha de inicio disponibilidad</th> 
+            <th>Fecha de fin disponibilidad</th> 
+            <th>Conglomerado</th> 
+            <th>Recogidas</th> 
+            <th>Direccion Destino</th> 
+            <th>Tipo de Servicio</th> 
+            <th>Número de pallets europeos</th> 
+            <th>Número de pallets americanos</th> 
+            <th>Precio</th> 
+            <th>Volumen Total</th> 
+            <th>Volumen Disponible</th> 
+
+
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for anuncio in anuncios %}
+            <tr>
+              <td>{{ anuncio[0] }}</td>
+              <td>{{ anuncio[1] }}</td>
+              <td>{{ anuncio[13] }}</td>
+              <td>{{ anuncio[5] }}</td>
+              <td>{{ anuncio[6] }}</td>
+              <td>{{ anuncio[7] }}</td>
+              <td>{{ anuncio[8] }}</td>
+              <td>{{ anuncio[9] }}</td>
+              <td>{{ anuncio[10] }}</td>
+              <td>{{ anuncio[15] }}</td>
+              <td>{{ anuncio[2] }}</td>
+              <td>{{ anuncio[3] }}</td>
+              <td>{{ anuncio[4] }}</td>
+              <td>Soy el precio</td>
+              <td>{{ anuncio[16] }}</td>
+              <td>{{ anuncio[17] }}</td>
+
+
+              <td><a class="button" href="{{ url_for('detalle_anuncio', id_anuncio=anuncio[12]) }}">Informate!</a></td> </tr>
+
+            </tr>
+          {% endfor %}
+
+          {% for x in anuncios_filtrados %}
+                <p> {{ x[0] }} </p>
+          {% endfor %}
+        </tbody>
+      </table>
+    </main>
+
+
+
+
+
+
+
+
+    <script>
+      //obtener la ubicacion del cliente
+      // Agrega un listener al botón "Buscar" para llamar a la función getLocation cuando el usuario lo seleccione
+      document.getElementById("buscar").addEventListener("click", function() {
+        getLocation();
+      });
+    
+      // Función para obtener la ubicación del usuario
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(updateOrigin);
+        } else {
+          alert("La geolocalización no está soportada en este navegador.");
+        }
+      }
+    
+      // Función para actualizar el valor del campo de origen de la carga con la ubicación del usuario
+      function updateOrigin(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+    
+        // Llama a un servicio de geocodificación para obtener la dirección correspondiente a la latitud y longitud
+        // En este ejemplo, se usa la API de OpenStreetMap
+        var url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            var address = data.display_name;
+            document.getElementById("origen_carga").value = address;
+          })
+          .catch(error => {
+            alert("No se pudo obtener la dirección de su ubicación.");
+            console.error(error);
+          });
+      }
+    </script>
+    
+
+    <script>
+      function showAlert() {
+        alert("Antes de publicar un anuncio, debes seleccionar un vehículo.");
+      }
+      </script>
+
+      
+<script>
+
+  // Hacer la peticion a la API --> tokens de peticiones acabados
+  fetch("https://gas-price.p.rapidapi.com/europeanCountries", {
+    "method": "GET",
+    "headers": {
+      "X-RapidAPI-Key": "9e8f9c696cmsh963609afb6d1512p192526jsna7b53e92ccf6",
+      "X-RapidAPI-Host": "gas-price.p.rapidapi.com"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Filtrar los datos para obtener los precios de España, Francia y Portugal
+    const precios = data.results.filter(pais => pais.country === "Spain" || pais.country === "France" || pais.country === "Portugal");
+
+    // Actualizar los elementos HTML con los precios
+    document.getElementById("precio-es").textContent = precios.find(pais => pais.country === "Spain").gasoline;
+    document.getElementById("precio-fr").textContent = precios.find(pais => pais.country === "France").gasoline;
+    document.getElementById("precio-pt").textContent = precios.find(pais => pais.country === "Portugal").gasoline;
+
+    document.getElementById("precio-es-diesel").textContent = precios.find(pais => pais.country === "Spain").diesel;
+    document.getElementById("precio-fr-diesel").textContent = precios.find(pais => pais.country === "France").diesel;
+    document.getElementById("precio-pt-diesel").textContent = precios.find(pais => pais.country === "Portugal").diesel;
+  })
+  .catch(err => {
+    console.error(err);
+  });
+
+      
+  
+  </script>
+</body>
+</html>

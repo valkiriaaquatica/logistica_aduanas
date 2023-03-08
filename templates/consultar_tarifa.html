@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cotizacion</title>
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f1f1f1;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.2s ease;
+        }
+        
+        a:hover {
+            border-bottom: 2px solid #333;
+        }
+        
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        select {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        input[type="submit"] {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('home') }}">Volver al inicio</a>
+    <h1>Consultar Tarifas</h1>
+    <form method="POST" action="{{ url_for('consultar_tarifa') }}">
+        <label for="tarifa">Seleccione la tarifa que desea consultar:</label>
+        <select name="tarifa" id="tarifa">
+            {% for row in tarifas %}
+            <option value="{{ row[0] }}">{{ row[0] }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Consultar">
+    </form>
+
+<h2> {{ precio_total }} </h2>
+
+    <form method="POST" action="{{ url_for('calcular_precio') }}">
+        <br>
+        <label for="pais">País:</label>
+        <select name="pais" id="pais">
+          {% for pais in paises %}
+          <option value="{{ pais[0] }}">{{ pais[0] }}</option>
+          {% endfor %}
+        </select>
+        <br>
+        <label for="distancia">Distancia (km):</label>
+        <input type="number" name="distancia" id="distancia">
+        <br>
+        <label for="fecha">Fecha:</label>
+        <input type="date" name="fecha" id="fecha">
+        <br>
+        <label for="hora">Hora:</label>
+        <input type="time" name="hora" id="hora">
+        <br>
+        <label for="urgencia">¿Es un servicio de urgencia?</label>
+        <input type="checkbox" name="urgencia" id="urgencia">
+        <br>
+        <input type="submit" value="Calcular precio">
+      </form>
+      
+
+</body>
+</html>

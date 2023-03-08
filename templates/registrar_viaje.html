@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registro de Viajes</title>
+<style>
+    body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        background-color: #f7f7f7;
+      }
+      
+      h1 {
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 30px;
+      }
+      
+      form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      label {
+        display: block;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      
+      input[type="text"],
+      input[type="date"],
+      select {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        background-color: #f0f0f0;
+      }
+      
+      select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5'%3E%3Cpath d='M0 0l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+      }
+      
+      input[type="submit"] {
+        background-color: #4c4c4c;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      
+      input[type="submit"]:hover {
+        background-color: #333;
+      }
+      
+</style>
+<body>
+<h1>Registrar nuevo viaje</h1>
+<form action="/registrar_viaje" method="POST">
+  <label for="nombre">Nombre del viaje:</label>
+  <input type="text" name="nombre" required><br><br>
+
+  
+  <label for="matricula">Vehiculo:</label>
+  <select id="matricula" name="matricula" >
+    {% for resultado in matriculas %}
+      <option value="{{ resultado[0] }}">{{ resultado[0] }}</option>
+    {% endfor %}
+  </select><br>
+
+
+  <label for="fecha_inicio">Fecha de inicio:</label>
+  <input type="date" name="fecha_inicio" required><br><br>
+
+  <label for="fecha_fin">Fecha de fin:</label>
+  <input type="date" name="fecha_fin"><br><br>
+
+  <label for="chofer">Chofer:</label>
+  <select id="chofer" name="chofer" >
+    {% for resultado in chofers %}
+      <option value="{{ resultado[0] }}">{{ resultado[1] }} (DNI: {{ resultado[0] }})</option>
+    {% endfor %}
+  </select>  
+  </select><br>
+
+  <label for="estado">Estado:</label>
+<select name="estado" id="estado">
+  <option value="Preparacion">Preparacion</option>
+  <option value="En proceso">En proceso</option>
+  <option value="Finalizado">Finalizado</option>
+  <option value="Problemas">Problemas</option>
+  <option value="En Espera por documentacion">En Espera por documentacion</option>
+  <option value="En espera por Transportes">En espera por Transportes</option>
+  <option value="En espera por Clientes">En espera por Clientes</option>
+  <option value="Otros">Otros</option>
+</select><br>
+
+
+
+  <input type="submit" value="Registrar">
+</form>
+</body>

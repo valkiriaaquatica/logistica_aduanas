@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ver Tarifas</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f0f0f0;
+        }
+  
+        h1 {
+          text-align: center;
+          margin-top: 20px;
+        }
+  
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          margin-top: 20px;
+          background-color: #fff;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+  
+        th, td {
+          text-align: left;
+          padding: 8px;
+          border-bottom: 1px solid #ddd;
+        }
+  
+        th {
+          background-color: #555;
+          color: white;
+        }
+  
+        tr:hover {
+          background-color: #f5f5f5;
+        }
+  
+        a {
+          display: block;
+          text-align: center;
+          margin-top: 20px;
+        }
+      </style>
+  </head>
+  <body>
+    <a href="{{ url_for('home') }}">Volver al inicio</a>
+
+    <h1>Lista de Tarifas</h1>
+    <table>
+      <tr>
+        <th>Nombre de Tarifa</th>
+        <th>Tipo de Vehículo</th>
+        <th>País</th>
+        <th>Precio Base</th>
+        <th>Precio por Kilómetro</th>
+        <th>Tarifa Fin de Semana</th>
+        <th>Tarifa Festivo</th>
+        <th>Tarifa Urgencia</th>
+        <th>Tarifa Situación País</th>
+        <th>Porcentaje Descuento</th>
+      </tr>
+      {% for tarifa in tarifas %}
+        <tr>
+          <td>{{ tarifa[1] }}</td>
+          <td>{{ tarifa[2] }}</td>
+          <td>{{ tarifa[3] }}</td>
+          <td>{{ tarifa[4] }}</td>
+          <td>{{ tarifa[5] }}</td>
+          <td>{{ tarifa[6] }}</td>
+          <td>{{ tarifa[7] }}</td>
+          <td>{{ tarifa[8] }}</td>
+          <td>{{ tarifa[9] }}</td>
+          <td>{{ tarifa[10] }}</td>
+          <td><a href="{{ url_for('modificar_tarifa', id=tarifa[0]) }}">Modificar</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

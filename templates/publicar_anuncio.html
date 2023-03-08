@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Publicar un Anuncio </title>
+<style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      form {
+        margin: 50px auto;
+        max-width: 600px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+      }
+      label {
+        display: block;
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 10px;
+      }
+      input[type="text"],
+      input[type="password"],
+      select {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+      }
+      input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      input[type="submit"]:hover {
+        background-color: #555;
+      }
+      
+        #error_message {
+            color: red;
+        }
+
+        
+</style>
+
+
+
+  <body>
+  <a href="{{ url_for('home') }}">Volver al inicio</a>
+
+  <form name="formulario_anuncio" method="post" >
+
+    <label for="matricula">Matricula / Vehiculo: {{ matricula }}</label>
+    <input type="hidden" name="matricula" value="{{ matricula }}">
+    
+    <label for="tipo_de_servicio">Tipo de servicio:</label>
+    <select name="tipo_de_servicio" id="tipo_de_servicio">
+      <option value="Mudanzas">Portes</option>
+      <option value="Portes">Mudanzas</option>
+      <option value="Transporte Nacional">Transporte Nacional</option>
+      <option value="Transporte Internacional (UE)">Transporte Internacional (UE)</option>
+      <option value="Transporte Internacional (No UE)">Transporte Internacional (No UE)</option
+    </select><br><br>
+
+    <label for="distancia">Distancia máxima:</label>
+    <input type="text" id="distancia" name="distancia"><br>
+
+
+    <label for="volumen_disponible">Volumen Disponible: </label>
+    {% if error %}
+    <span id="error_message">{{ error }}</span>
+    {% endif %}
+
+    <input type="number" id="volumen_disponible" name="volumen_disponible"><br>
+    
+    
+    <label for="destino">Destino preferido:</label>
+    <input type="text" id="destino" name="destino"><br>
+
+    <label for="origen">Direccion origen:</label>
+    <input type="text" id="origen" name="origen"><br>
+
+
+    <label for="fecha_inicio_disponibilidad">Fecha Inicio Disponibilidad :</label>
+    <input type="date" id="fecha_inicio_disponibilidad" name="fecha_inicio_disponibilidad"><br>
+
+    
+    <label for="fecha_fin_disponibilidad">Fecha Fin  Disponibilidad :</label>
+    <input type="date" id="fecha_fin_disponibilidad" name="fecha_fin_disponibilidad"><br>
+
+    <p> si clickas la opcione del checkbox aceptas </p>
+
+  
+    <label for="conglomerado">Conglomerado:</label>
+    <input type="checkbox" id="conglomerado" name="conglomerado" value="true" {% if conglomerado %}checked{% endif %}>
+    
+    <label for="recogidas">Recogidas:</label>
+    <input type="checkbox" id="recogidas" name="recogidas" value="true" {% if recogidas %}checked{% endif %}><br>
+    
+    <label for="traspalet">Traspalet:</label>
+    <input type="checkbox" id="traspalet" name="traspalet" value="true" {% if traspalet %}checked{% endif %}><br>
+    
+    <label for="disponibilidad_inmediata">Disponibilidad inmediata:</label>
+    <input type="checkbox" id="disponibilidad_inmediata" name="disponibilidad_inmediata" value="true" {% if disponibilidad_inmediata %}checked{% endif %}><br>
+    
+    <label for="fines_de_semana">Fines de semana:</label>
+    <input type="checkbox" id="fines_de_semana" name="fines_de_semana" value="true" {% if fines_de_semana %}checked{% endif %}><br>
+    
+    <input type="submit" value="Publicar">
+
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Modificar Tarifa</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        }
+
+        h1 {
+        color: #333;
+        text-align: center;
+        }
+
+        form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+        display: block;
+        margin-bottom: 10px;
+        color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 3px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="submit"] {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+        background-color: #3e8e41;
+        }
+
+        a {
+        color: #007bff;
+        text-decoration: none;
+        margin-top: 20px;
+        display: inline-block;
+        }
+
+        a:hover {
+        text-decoration: underline;
+        }
+
+        /* Estilos específicos del formulario */
+        #nombre_tarifa {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        }
+
+        select {
+        height: 40px;
+        }
+
+        label[for="precio_base"],
+        label[for="precio_por_km"],
+        label[for="tarifa_fin_de_semana"],
+        label[for="tarifa_festivo"],
+        label[for="tarifa_urgencia"],
+        label[for="tarifa_situacion_pais"],
+        label[for="porcentaje_descuento"] {
+        width: 150px;
+        display: inline-block;
+        margin-right: 10px;
+        text-align: right;
+        }
+
+        input[type="number"] {
+        width: calc(100% - 160px);
+        display: inline-block;
+        vertical-align: middle;
+        }
+
+        /* Estilos para los botones de modificar */
+        .modificar {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 3px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        margin-left: 10px;
+        opacity: 0.7;
+        transition: opacity 0.3s ease-in-out;
+        }
+
+        .modificar:hover {
+        opacity: 1;
+        }
+</style>
+  </head>
+  <body>
+    <h1>Modificar Tarifa</h1>
+    <form action="{{ url_for('modificar_tarifa', id=tarifa[0]) }}" method="POST">
+      <label for="nombre_tarifa">Nombre de la Tarifa:</label>
+      <input type="text" id="nombre_tarifa" name="nombre_tarifa" value="{{ tarifa[1] }}"><br>
+      <label for="tipo_vehiculo_nombre">Tipo de Vehículo:</label>
+      <select id="tipo_vehiculo_nombre" name="tipo_vehiculo_nombre">
+        {% for tipo_vehiculo in tipos_vehiculos %}
+          {% if tipo_vehiculo[0] == tarifa[1] %}
+            <option value="{{ tipo_vehiculo[0] }}" selected>{{ tipo_vehiculo[0] }}</option>
+          {% else %}
+            <option value="{{ tipo_vehiculo[0] }}">{{ tipo_vehiculo[0] }}</option>
+          {% endif %}
+        {% endfor %}
+      </select><br>
+      <label for="pais_nombre">País:</label>
+      <select id="pais_nombre" name="pais_nombre">
+        {% for pais in paises %}
+          {% if pais[0] == tarifa[2] %}
+            <option value="{{ pais[0] }}" selected>{{ pais[0] }}</option>
+          {% else %}
+            <option value="{{ pais[0] }}">{{ pais[0] }}</option>
+          {% endif %}
+        {% endfor %}
+      </select><br>
+      <label for="precio_base">Precio Base:</label>
+      <input type="number" id="precio_base" name="precio_base" value="{{ tarifa[5] }}" step="0.01"><br>
+      <label for="precio_por_km">Precio por Kilómetro:</label>
+      <input type="number" id="precio_por_km" name="precio_por_km" value="{{ tarifa[6] }}" step="0.01"><br>
+      <label for="tarifa_fin_de_semana">Tarifa Fin de Semana:</label>
+      <input type="number" id="tarifa_fin_de_semana" name="tarifa_fin_de_semana" value="{{ tarifa[7] }}" step="0.01"><br>
+      <label for="tarifa_festivo">Tarifa Festivo:</label>
+      <input type="number" id="tarifa_festivo" name="tarifa_festivo" value="{{ tarifa[8] }}" step="0.01"><br>
+      <label for="tarifa_urgencia">Tarifa Urgencia:</label>
+      <input type="number" id="tarifa_urgencia" name="tarifa_urgencia" value="{{ tarifa[9] }}" step="0.01"><br>
+      <label for="tarifa_situacion_pais">Tarifa Situación País:</label>
+      <input type="number" id="tarifa_situacion_pais" name="tarifa_situacion_pais" value="{{ tarifa[10] }}" step="0.01"><br>
+      <label for="porcentaje_descuento">Porcentaje de Descuento:</label>
+      <input type="number" id="porcentaje_descuento" name="porcentaje_descuento" value="{{ tarifa[11] }}" step="0.01"><br>
+      <input type="submit" value="Guardar Cambios">
+    </form>
+    <a href="{{ url_for('ver_tarifas') }}">Cancelar</a>
+  </body>
+</html>
+

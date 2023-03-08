@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Login Formulario </title>
+<style>
+  body {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+  }
+  form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+</style>  
+</head>
+<body>
+  <a href="{{ url_for('home') }}">Volver al inicio</a>
+
+  <h2 > {{ error }}</h2>
+  <br>
+  <h2> {{ error }}</h2>
+  <form name="formulario_login" method="post">
+    <label for="username">CIF</label>
+    <input type="text" id="cif" name="cif" required>
+  
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+  
+    <input type="submit" value="Login">
+  </form>
+
+  <br>
+  <a href="{{ url_for('registrar') }}"><button>Si no estás aún registrado, pulsa aquí</button></a>
+</body>
+
+</html>

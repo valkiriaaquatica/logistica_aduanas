@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Detalles del Viaje</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    #contenido {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 20px;
+    }
+    table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+    #viaje {
+      width: 30%;
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
+    }
+    #cargas {
+      width: 65%;
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    #agregar-carga-btn {
+      background-color: #428bca;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    form {
+      display: none;
+      margin-top: 20px;
+    }
+    form label {
+      font-size: 16px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    form input[type=text],
+    form input[type=number],
+    form input[type=file] {
+      font-size: 16px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+    }
+    form input[type=submit] {
+      background-color: #428bca;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <a href="{{ url_for('home') }}">Volver al inicio</a>
+
+  <div id="contenido">
+
+    <div id="viaje">
+      <h1>Detalles del Viaje</h1>
+      <p><strong>Nombre:</strong> {{ informacion_viaje[0][1] }}</p>
+      <p><strong>Matrícula:</strong> {{ informacion_viaje[0][2] }}</p>
+      <p><strong>Fecha de inicio:</strong> {{ informacion_viaje[0][4] }}</p>
+      <p><strong>Fecha de fin:</strong> {{ informacion_viaje[0][5] }}</p>
+      <p><strong>Estado:</strong> {{ informacion_viaje[0][6] }}</p>
+      <p><strong>Chofer:</strong> {{ informacion_viaje[0][7] }}</p>
+    </div>
+
+    <div id="cargas">
+      <h2>Cargas</h2>
+      {% if cargas %}
+      <table>
+        <tr>
+          <th>CIF Cliente</th>
+          <th>Descripción</th>
+          <th>Peso (kg)</th>
+          <th>Alto (cm)</th>
+          <th>Ancho (cm)</th>
+          <th>Largo (cm)</th>
+          <th>Documentos</th>
+          <th>Imágenes</th>
+
+        </tr>
+        {% for carga in cargas %}
+        <tr>
+          <td>{{ carga[2] }}</td>
+          <td>{{ carga[3] }}</td>
+          <td>{{ carga[4] }}</td>
+          <td>{{ carga[5] }}</td>
+          <td>{{ carga[6] }}</td>
+          <td>{{ carga[7] }}</td>
+          <td>{{ carga[8] }}</td> 
+          <td>{{ carga[9] }}</td>
+
+          <td>
+   
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+      <p>No hay cargas en este viaje.</p>
+      {% endif %}
+    </div>
+
+    <div id="agregar-carga">
+      <h2>Agregar Carga</h2>
+      <button onclick="mostrarFormulario()">Agregar Carga</button>
+
+      <form action="{{ url_for('agregar_carga', id_viaje=informacion_viaje[0][0]) }}" method="POST" enctype="multipart/form-data"
+        id="formularioCarga">
+        <input type="text" name="cif_cliente" placeholder="CIF Cliente" required><br><br>
+        <input type="text" name="descripcion" placeholder="Descripción" required><br><br>
+        <input type="number" name="peso_kg" placeholder="Peso kg" required><br><br>
+        <input type="number" name="alto_cm" placeholder="Alto (cm)" required><br><br>
+        <input type="number" name="ancho_cm" placeholder="Ancho (cm)" required><br><br>
+        <input type="number" name="largo_cm" placeholder="Largo (cm)" required><br><br>
+        <label>Documentos del transporte</label>
+        <input type="file" name="documentos" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.gif"><br><br>
+        <label>Imágenes del transporte</label>
+        <input type="file" name="imagen" accept="image/*"><br>
+        <input type="submit" value="Guardar">
+        </form>
+        </div>
+        
+          </div>
+          <script>
+            function mostrarFormulario() {
+              var formulario = document.getElementById("formularioCarga");
+              if (formulario.style.display === "none") {
+                formulario.style.display = "block";
+              } else {
+                formulario.style.display = "none";
+              }
+            }
+          </script>
+        </body>
+        </html>
+
+
+

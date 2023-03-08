@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Tabla de viajes</title>
+    <style>
+        /* Estilos para la tabla */
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        th, td {
+          text-align: left;
+          padding: 8px;
+        }
+        th {
+          background-color: #4CAF50;
+          color: white;
+        }
+        tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+        tr:hover {
+          background-color: #ddd;
+        }
+        /* Estilos para el encabezado */
+        h1 {
+          color: #555;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+      </style>
+  </head>
+  <body>
+    <a href="{{ url_for('home') }}">Volver al inicio</a><br>
+    <a href="{{ url_for('registrar_viaje') }}">Administrar Viajes</a><br>
+    <h1>Tabla de viajes</h1>
+    <table>
+      <tr>
+        <th>Nombre del Viaje</th>
+        <th>Matrícula</th>
+        <th>Fecha de inicio</th>
+        <th>Fecha de fin</th>
+        <th>Estado</th>
+        <th>Chofer</th>
+      </tr>
+      {% for row in informacion_viajes %}
+      <tr>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[4] }}</td>
+        <td>{{ row[5] }}</td>
+        <td>{{ row[6] }}</td>
+        <td>{{ row[7] }}</td>
+        <td><a class="button" href="{{ url_for('informacion_viaje', viaje_id=row[0]) }}">Inspeccionar</a></td> </tr>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

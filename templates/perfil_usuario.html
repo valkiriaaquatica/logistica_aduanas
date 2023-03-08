@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Perfil de la Empresa</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+      
+    .header {
+      background-color: #333;
+      color: #;
+      padding: 20px;
+      text-align: center;
+    }
+      
+    .container {
+      max-width: 2000px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    
+      
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+      
+    th {
+      text-align: left;
+      padding: 12px;
+      background-color: #fafafa;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      font-weight: bold;
+      color: #555;
+    }
+      
+    td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+      color: #333;
+    }
+      
+    h2 {
+      margin-top: 0;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 24px;
+    }
+    
+    a {
+      color: #333;
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 0.2s ease;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+    }
+    
+    a:hover {
+      color: #555;
+      border-bottom: 2px solid #555;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 8px;
+      background-color: #333;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    
+    .btn:hover {
+      background-color: #555;
+    }
+    
+    .vehiculos-table {
+      margin-top: 32px;
+    }
+    
+    .vehiculos-table th {
+      background-color: #555;
+      color: #fff;
+    }
+    
+    .vehiculos-table td {
+      font-size: 14px;
+      color: #555;
+    }
+    
+  </style>
+
+
+</head>
+<body>
+    <a href="{{ url_for('publicar_anuncio') }}">Publicar un anuncio</a> <br>
+    <a href="{{ url_for('ver_anuncios_empresa') }}">Ver mis anuncios publicados</a> <br>
+    <a href="{{ url_for('registrar_vehiculo') }}">Registrar un nuevo vehículo</a> <br>
+    <a href="{{ url_for('publicar_tarifa') }}">Pubcliar una nueva Tarifa</a><br>
+    <a href="{{ url_for('ver_tarifas') }}">Ver mis Tarifas</a><br>
+    <a href="{{ url_for('consultar_tarifa') }}">Consultar tarifas</a><br>
+    <a href="{{ url_for('registrar_viaje') }}">Administrar Viajes</a><br>
+    <a href="{{ url_for('viajes') }}">Viajes</a><br>
+    <a href="{{ url_for('home') }}">Volver al inicio</a>
+  <div class="header">
+    <h1>Perfil de la Empresa</h1>
+  </div>
+
+  <div class="container">
+    <h2>Información de la Empresa</h2>
+    <table>
+      <tr>
+        <th>CIF:</th>
+        <td>{{ empresa[0] }}</td>
+      </tr>
+      <tr>
+        <th>Nombre:</th>
+        <td>{{ empresa[1] }}</td>
+      </tr>
+      <tr>
+        <th>Localización:</th>
+        <td>{{ empresa[2] }}</td>
+      </tr>
+      <tr>
+        <th>Actividad:</th>
+        <td>{{ empresa[3] }}</td>
+      </tr>
+      <tr>
+        <th>Correo Electrónico:</th>
+        <td>{{ empresa[4] }}</td>
+      </tr>
+    </table>
+    <table>
+      <thead>
+        <tr>
+          <th>Matricula</th>
+          <th>Título</th>
+          <th>Descripción</th>
+          <th>Tipo de vehículo</th>
+          <th>Volumen total (m3)</th>
+          <th>Marca</th>
+          <th>Antigüedad</th>
+          <th>Estado</th>
+          <th>Especializado en</th>
+          <th>Número máximo de pallets europeo</th>
+          <th>Número máximo de pallets americano</th>
+          <th>Anchura</th>
+          <th>Altura</th>
+          <th>Combustible</th>
+          <th>Nacionalidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for vehiculo in vehiculos %}
+        <tr>
+          <td>{{ vehiculo[15] }}</td>
+          <td>{{ vehiculo[2] }}</td>
+          <td>{{ vehiculo[3] }}</td>
+          <td>{{ vehiculo[4] }}</td>
+          <td>{{ vehiculo[20] }}</td>
+          <td>{{ vehiculo[5] }}</td>
+          <td>{{ vehiculo[6] }}</td>
+          <td>{{ vehiculo[7] }}</td>
+          <td>{{ vehiculo[8] }}</td>
+          <td>{{ vehiculo[9] }}</td>
+          <td>{{ vehiculo[10] }}</td>
+          <td>{{ vehiculo[11] }}</td>
+          <td>{{ vehiculo[12] }}</td>
+          <td>{{ vehiculo[13] }}</td>
+          <td>{{ vehiculo[14] }}</td>
+          <td><a class="button" href="{{ url_for('modificar_vehiculo', vehiculo_id=vehiculo[0]) }}">Modificar</a></td> </tr>
+          <td><a class="button" href="{{ url_for('publicar_anuncio', matricula=vehiculo[15]) }}">Publicar anuncio</a></td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    
+  </div>
+
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cálculo del Volumen de la Carga</title>
+</head>
+<body>
+    <label>
+        <input type="checkbox" name="buscar_cerca_de_mi" id="buscar_cerca_de_mi">
+        Buscar cerca de mi ubicación
+      </label>
+      
+      <button type="button" id="buscar">Buscar</button>
+      
+      <script>
+        // Agrega un listener al botón "Buscar" para llamar a la función getLocation cuando el usuario lo seleccione
+        document.getElementById("buscar").addEventListener("click", function() {
+          getLocation();
+        });
+      
+        // Función para obtener la ubicación del usuario
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(updateOrigin);
+          } else {
+            alert("La geolocalización no está soportada en este navegador.");
+          }
+        }
+      
+        // Función para actualizar el valor del campo de origen de la carga con la ubicación del usuario
+        function updateOrigin(position) {
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+      
+          // Llama a un servicio de geocodificación para obtener la dirección correspondiente a la latitud y longitud
+          // En este ejemplo, se usa la API de OpenStreetMap
+          var url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              var address = data.display_name;
+              document.getElementById("origen_carga").value = address;
+            })
+            .catch(error => {
+              alert("No se pudo obtener la dirección de su ubicación.");
+              console.error(error);
+            });
+        }
+      </script>
+      
+      
+</body>
+</html>

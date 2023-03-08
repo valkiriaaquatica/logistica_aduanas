@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buscar un transporte</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        select,
+        input[type="text"],
+        input[type="number"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<a href="{{ url_for('home') }}">Volver al inicio</a>
+
+<body>
+    <h1>Buscar un transporte</h1>
+    <form action="{{ url_for('buscar_transporte') }}" method="POST">
+        <label for="tipo_vehiculo">Tipo de vehículo:</label>
+        <select id="tipo_vehiculo" name="tipo_vehiculo">
+            {% for resultado in resultados_tipo_vehiculo %}
+              <option value="{{ resultado[0] }}">{{ resultado[0] }}</option>
+            {% endfor %}
+        </select><br>
+        
+        <label for="pais">Pais de destino:</label>
+        <select id="pais" name="pais" >
+          {% for resultado in resultado_paises %}
+            <option value="{{ resultado[0] }}">{{ resultado[0] }}</option>
+          {% endfor %}
+        </select><br>
+
+
+        <label for="tipo_de_carga">Tipo de carga:</label>
+        <select name="tipo_de_carga" id="tipo_de_carga">
+          <option value="">Selecciona un tipo de carga</option>
+          <option value="Pallets europeos">Pallets europeos</option>
+          <option value="Pallets americanos">Pallets americanos</option>
+          <option value="Contenedor de 40 pies">Contenedor de 40 pies</option>
+          <option value="Contenedor de 20 pies">Contenedor de 20 pies</option>
+          <option value="A granel">A granel</option>
+          <option value="Tanques">Tanques</option>
+          <option value="Cajas">Cajas</option>
+          <option value="Planchas">Planchas</option>
+          <option value="Barriles">Barriles</option>
+          <option value="Otros">Otros</option>
+        </select>
+        <br>
+        
+        <div id="volumen_container" style="display:none">
+          <label for="volumen">Volumen:</label>
+          <input type="number" id="volumen" name="volumen">
+        </div>
+        
+        <label for="cantidad_de_carga">Cantidad de carga:</label>
+        <input type="number" id="cantidad_de_carga" name="cantidad_de_carga">
+    
+
+
+        <label for="precio_maximo">Precio máximo:</label>
+        <input type="number" id="precio_maximo" name="precio_maximo">
+
+        <label for="tipo_de_servicio">Tipo de servicio:</label>
+        <select name="tipo_de_servicio" id="tipo_de_servicio">
+          <option value="Mudanzas">Portes</option>
+          <option value="Portes">Mudanzas</option>
+          <option value="Transporte Nacional">Transporte Nacional</option>
+          <option value="Transporte Internacional (UE)">Transporte Internacional (UE)</option>
+          <option value="Transporte Internacional (No UE)">Transporte Internacional (No UE)</option
+        </select><br>
+        
+        <input type="submit" value="Buscar">
+        
+    </form>
+          
+<script>
+    // Mostrar el campo de volumen si el tipo de carga seleccionado lo requiere
+    const tipoDeCarga = document.getElementById('tipo_de_carga');
+    const volumenContainer = document.getElementById('volumen_container');
+    tipoDeCarga.addEventListener('change', (event) => {
+        const requiereVolumen = ['A granel', 'Pallets europeos', 'Pallets americanos', 'Tanques', 'Cajas', 'Planchas', 'Barriles'].includes(event.target.value);
+        volumenContainer.style.display = requiereVolumen ? 'block' : 'none';
+    });
+</script>
+
+
+</body>
+</html>

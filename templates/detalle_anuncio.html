@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles de anuncio</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/detalle_anuncio.css') }}">
+</head>
+<body>
+    <h1>Detalles de anuncio</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tipo de servicio</th>
+                <th>Distancia máxima</th>
+                <th>Destino preferido</th>
+                <th>Fecha de inicio disponibilidad</th>
+                <th>Fecha de fin disponibilidad</th>
+                <th>Conglomerado</th>
+                <th>Recogidas</th>
+                <th>Traspalet</th>
+                <th>Tipo de vehículo</th>
+                <th>Marca</th>
+                <th>Número de pallets europeos</th>
+                <th>Número de pallets americanos</th>
+                <th>Precio mínimo por servicio</th>
+                <th>Precio por kilómetro</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ anuncio[2] }}</td>
+                <td>{{ anuncio[5] }}</td>
+                <td>{{ anuncio[6] }}</td>
+                <td>{{ anuncio[7] }}</td>
+                <td>{{ anuncio[8] }}</td>
+                <td>{{ anuncio[9] }}</td>
+                <td>{{ anuncio[10] }}</td>
+                <td>{{ anuncio[11] }}</td>
+                <td>{{ anuncio[12] }}</td>
+                <td>{{ anuncio[3] }}</td>
+                <td>{{ anuncio[4] }}</td>
+                <td>{{ anuncio[13] }}</td>
+                <td>{{ anuncio[14] }}</td>
+
+            </tr>
+        </tbody>
+    </table>
+    <h2>Informacion Personal y  detalles de la carga</h2>
+    <form action="/anuncios/{{ anuncio[0] }}/solicitar" method="post">
+        
+        <label for="cif_cliente">CIF del cliente:</label>
+        <input type="text" name="cif_cliente" id="cif_cliente" required><br>
+
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" name="nombre" id="nombre" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required><br>
+
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" name="telefono" id="telefono" ><br>
+
+        <label for="mensaje">Mensaje:</label>
+        <textarea name="mensaje" id="mensaje" ></textarea><br>
+
+        <label for="pais_nombre">País:</label>
+        <select id="pais_nombre" name="pais_nombre" >
+          {% for resultado in paises %}
+            <option value="{{ resultado[0] }}">{{ resultado[0] }}</option>
+          {% endfor %}
+        </select><br>
+
+
+        <label for="peso_kg">Peso (en kg):</label>
+        <input type="number" name="peso_kg" id="peso_kg" required><br>
+
+        <label for="alto_cm">Alto (en cm):</label>
+        <input type="number" name="alto_cm" id="alto_cm" required><br>
+
+        <label for="ancho_cm">Ancho (en cm):</label>
+        <input type="number" name="ancho_cm" id="ancho_cm" required><br>
+
+        <label for="largo_cm">Largo (en cm):</label>
+        <input type="number" name="largo_cm" id="largo_cm" required><br>
+
+        <label for="descripcion">Descripción de la carga:</label>
+        <input type="text" name="descripcion" id="descripcion" required><br>
+
+        <button type="submit">Enviar solicitud</button>
+
+    </form>
+
+    
+</body>
+</html>
